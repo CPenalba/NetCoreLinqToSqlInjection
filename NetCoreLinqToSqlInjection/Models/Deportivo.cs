@@ -1,21 +1,22 @@
 ﻿namespace NetCoreLinqToSqlInjection.Models
 {
-    public class Coche: ICoche
+    public class Deportivo : ICoche
     {
+
+        public Deportivo()
+        {
+            this.Marca = "BMW";
+            this.Modelo = "i35";
+            this.Imagen = "bmw.jpg";
+            this.Velocidad = 0;
+            this.VelocidadMaxima = 302;
+        }
+
         public string Marca { get; set; }
         public string Modelo { get; set; }
         public string Imagen { get; set; }
         public int Velocidad { get; set; }
         public int VelocidadMaxima { get; set; }
-
-        public Coche()
-        {
-            this.Marca = "Cupra";
-            this.Modelo = "Formetor";
-            this.Imagen = "cupra.jpg";
-            this.Velocidad = 0;
-            this.VelocidadMaxima = 120;
-        }
 
         public void Acelerar()
         {
