@@ -1,5 +1,6 @@
 using NetCoreLinqToSqlInjection.Controllers;
 using NetCoreLinqToSqlInjection.Models;
+using NetCoreLinqToSqlInjection.Repositories;
 using System.Text.RegularExpressions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,17 +8,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<RepositoryDoctoresSQLServer>();
+
 //RESOLVEMOS EL SERVICIO COCHE
 //builder.Services.AddTransient<Coche>();
-//builder.Services.AddSingleton<ICoche, Deportivo>();
-Coche car = new Coche();
-car.Marca = "Cupra";
-car.Modelo = "Leon";
-car.Imagen = "cupra2.jpg";
-car.Velocidad = 0;
-car.VelocidadMaxima = 280;
+builder.Services.AddSingleton<ICoche, Deportivo>();
+//Coche car = new Coche();
+//car.Marca = "Cupra";
+//car.Modelo = "Leon";
+//car.Imagen = "cupra2.jpg";
+//car.Velocidad = 0;
+//car.VelocidadMaxima = 280;
 //PARA ENVIAR NUESTRO OBJETO PERSONALIZADO SE UTILIZA LAMBDA
-builder.Services.AddSingleton<ICoche, Coche>(x => car);
+//builder.Services.AddSingleton<ICoche, Coche>(x => car);
 
 var app = builder.Build();
 
