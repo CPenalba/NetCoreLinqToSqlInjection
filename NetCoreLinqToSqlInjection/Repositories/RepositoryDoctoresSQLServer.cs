@@ -1,10 +1,19 @@
 ﻿using NetCoreLinqToSqlInjection.Models;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Http.HttpResults;
+
+#region
+//create procedure SP_DELETE_DOCTOR
+//(@iddoctor int)
+//as
+//delete from DOCTOR where DOCTOR_NO=@iddoctor
+//go
+#endregion
 
 namespace NetCoreLinqToSqlInjection.Repositories
 {
-    public class RepositoryDoctoresSQLServer
+    public class RepositoryDoctoresSQLServer: IRepositoryDoctores
     {
         private DataTable tablaDoctores;
         private SqlConnection cn;
@@ -21,6 +30,18 @@ namespace NetCoreLinqToSqlInjection.Repositories
             SqlDataAdapter ad = new SqlDataAdapter
                 ("select * from DOCTOR", connectionString);
             ad.Fill(this.tablaDoctores);
+        }
+
+        public void DeleteDoctor(int idDoctor)
+        {
+            string sql = "sp_delete_doctor";
+            this.com.Parameters.AddWithValue("iddoctor", idDoctor);
+            this.com.CommandType = CommandType.StoredProcedure;
+            this.com.CommandText = sql;
+            this.cn.Open();
+            this.com.ExecuteNonQuery();
+            this.cn.Close();
+            this.com.Parameters.Clear();
         }
 
         public List<Doctor> GetDoctores()
